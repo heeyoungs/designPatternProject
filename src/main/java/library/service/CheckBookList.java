@@ -12,7 +12,7 @@ public class CheckBookList implements Check {
     @Override
     public void checkBook() {
         System.out.println("도서목록을 보여줍니다.");
-        final String query = "SELECT * FROM 도서목록";
+        final String query = "SELECT * FROM 도서목록 ORDER BY 책번호";
         try (Connection connection = PostgresqlAccess.setConnection();
              PreparedStatement pstmt = connection.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery();) {
