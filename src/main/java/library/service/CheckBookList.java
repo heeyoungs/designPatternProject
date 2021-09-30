@@ -29,23 +29,4 @@ public class CheckBookList implements Check {
             System.out.println("SQLState: " + sqex.getSQLState());
         }
     }
-
-    public boolean isBook(int bookNum) {
-        final String query = "SELECT 책대출가능여부 FROM 도서목록 WHERE 책번호=?";
-        try (Connection connection = PostgresqlAccess.setConnection();
-             PreparedStatement pstmt = connection.prepareStatement(query);
-             ) {
-            pstmt.setInt(1, bookNum);
-            ResultSet rs = pstmt.executeQuery();
-
-            rs.next();
-            if (rs.getBoolean(1)) {
-                return true;
-            }
-        } catch (SQLException sqex) {
-            System.out.println("SQLException: " + sqex.getMessage());
-            System.out.println("SQLState: " + sqex.getSQLState());
-        }
-        return false;
-    }
 }

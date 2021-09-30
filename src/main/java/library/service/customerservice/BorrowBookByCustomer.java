@@ -3,8 +3,8 @@ package library.service.customerservice;
 import exception.InputException;
 import io.wisoft.jdbc.PostgresqlAccess;
 import library.action.Update;
-import library.person.Customer;
 import library.service.CheckBookList;
+import library.service.IsBook;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,9 +24,10 @@ public class BorrowBookByCustomer implements Update {
         }catch (Exception e){
             throw new InputException("숫자를 입력안함.");
         }
-        CheckBookList checkBookList = new CheckBookList();
 
-        if (!checkBookList.isBook(bookNum)) {
+        IsBook isBook = new IsBook();
+
+        if (!isBook.isBook(bookNum)) {
             System.out.println("책이 없습니다!");
             return;
         }
@@ -37,8 +38,13 @@ public class BorrowBookByCustomer implements Update {
         ) {
             conn.setAutoCommit(false);
             pstmt.setInt(1,bookNum);
-            Customer.borrowList.add(bookNum);
             pstmt.executeUpdate();
+
+            PreparedStatement pst = conn.prepareStatement("INSERT INTO 빌려간책리스트 VALUES (?)");
+            pst.setInt(1,bookNum);
+            pst.executeUpdate();
+            pst.close();
+
             conn.commit();
             System.out.println(bookNum + "번 책을 빌렸습니다.");
         } catch (SQLException e) {

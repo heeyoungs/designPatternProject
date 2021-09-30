@@ -4,12 +4,11 @@ import exception.InputException;
 import library.action.Update;
 
 import io.wisoft.jdbc.PostgresqlAccess;
-import library.person.Customer;
 import library.service.CheckBookList;
+import library.service.IsBook;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -26,7 +25,10 @@ public class ReturnBookByCustomer implements Update {
         }catch (Exception e){
             throw new InputException("숫자를 입력안함.");
         }
-        if (!Customer.borrowList.contains(bookNum)) {
+
+        IsBook isBook = new IsBook();
+
+        if (isBook.isBorrow(bookNum)){
             System.out.println("반납 대상이 아닙니다.");
             return;
         }
@@ -37,8 +39,13 @@ public class ReturnBookByCustomer implements Update {
         ) {
             conn.setAutoCommit(false);
             pstmt.setInt(1,bookNum);
-            Customer.borrowList.remove(bookNum);
             pstmt.executeUpdate();
+
+            PreparedStatement pst = conn.prepareStatement("DELETE FROM 빌려간책리스트 WHERE 책번호=?");
+            pst.setInt(1,bookNum);
+            pst.executeUpdate();
+            pst.close();
+
             conn.commit();
             System.out.println(bookNum + "번 책을 반납했습니다.");
         } catch (SQLException e) {
