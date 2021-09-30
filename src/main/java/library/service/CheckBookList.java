@@ -17,11 +17,11 @@ public class CheckBookList implements Check {
              PreparedStatement pstmt = connection.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery();) {
             while (rs.next()) {
-                System.out.print("[책 번호] " + rs.getString(1) + "||");
+                System.out.println("[책 번호] " + rs.getString(1));
                 System.out.print("[책 이름] " + rs.getString(2) + "||");
                 System.out.print("[책 작가] " + rs.getString(3) + "||");
                 System.out.print("[책 페이지]" + rs.getString(4) + "||");
-                System.out.println("[책 출판년도]" + rs.getString(5) + "||");
+                System.out.print("[책 출판년도]" + rs.getString(5) + "||");
                 System.out.println("[책 대출 가능여부]" + rs.getString(6));
             }
         } catch (SQLException sqex) {
@@ -31,13 +31,17 @@ public class CheckBookList implements Check {
     }
 
     public boolean isBook(int bookNum) {
-        final String query = "SELECT 책대출가능여부 FROM 도서목록 WHERE 책번호=bookNum";
+        final String query = "SELECT 책대출가능여부 FROM 도서목록 WHERE 책번호=?";
         try (Connection connection = PostgresqlAccess.setConnection();
              PreparedStatement pstmt = connection.prepareStatement(query);
-             ResultSet rs = pstmt.executeQuery();) {
-            if (rs.getString(1) == "t") {
+             ) {
+            pstmt.setInt(1, bookNum);
+            ResultSet rs = pstmt.executeQuery();
+
+            rs.next();
+            if (rs.getBoolean(1)) {
                 return true;
-            } else return false;
+            }
         } catch (SQLException sqex) {
             System.out.println("SQLException: " + sqex.getMessage());
             System.out.println("SQLState: " + sqex.getSQLState());

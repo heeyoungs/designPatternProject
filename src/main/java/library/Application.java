@@ -1,5 +1,6 @@
 package library;
 
+import exception.InputException;
 import library.gui.Gui;
 import library.login.Login;
 import library.person.Owner;
@@ -13,7 +14,7 @@ import library.service.ownerservice.UpdateBookByOwner;
 import java.util.Scanner;
 
 public class Application {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InputException {
         Scanner scanner = new Scanner(System.in);
 
         Owner owner = new Owner();
@@ -23,7 +24,12 @@ public class Application {
 
         while (run) {
             gui.startGui();
-            int who = scanner.nextInt();
+            int who;
+            try {
+                who = scanner.nextInt();
+            }catch (Exception e){
+                throw new InputException("숫자를 입력안함.");
+            }
             int input;
 
             switch (who) {
@@ -37,7 +43,11 @@ public class Application {
                     outter:
                     while (true) {
                         gui.case1Gui();
-                        input = scanner.nextInt();
+                        try {
+                            input = scanner.nextInt();
+                        }catch (Exception e){
+                            throw new InputException("숫자를 입력안함.");
+                        }
                         switch (input) {
                             case 1:
                                 AddBookByOwner addBookByOwner = new AddBookByOwner();
@@ -69,7 +79,11 @@ public class Application {
                     outter:
                     while (true) {
                         gui.case2Gui();
-                        input = scanner.nextInt();
+                        try {
+                            input = scanner.nextInt();
+                        }catch (Exception e){
+                            throw new InputException("숫자를 입력안함.");
+                        }
                         switch (input) {
                             case 1:
                                 BorrowBookByCustomer borrowBookByCustomer = new BorrowBookByCustomer();
@@ -90,8 +104,8 @@ public class Application {
                                 gui.defaultGui();
                                 break;
                         }
-                        break;
                     }
+                    break;
                 }
                 default: {
                     gui.defaultGui();

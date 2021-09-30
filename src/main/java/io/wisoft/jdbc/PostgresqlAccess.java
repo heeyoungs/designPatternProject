@@ -8,8 +8,8 @@ public class PostgresqlAccess {
     private static Connection conn = null;
 
     public static Connection setConnection(){
-        String url = "jdbc:postgresql://localhost:5432/library";
-        String username = "heeyoungzzang";
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String username = "postgres";
         String password = "123";
 
         try{
