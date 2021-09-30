@@ -1,16 +1,16 @@
 package library.service;
 
 import io.wisoft.jdbc.PostgresqlAccess;
-import library.action.Check;
+import library.action.Action;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CheckBookList implements Check {
+public class CheckBookList implements Action {
     @Override
-    public void checkBook() {
+    public void actionBook() {
         System.out.println("도서목록을 보여줍니다.");
         final String query = "SELECT * FROM 도서목록 ORDER BY 책번호";
         try (Connection connection = PostgresqlAccess.setConnection();

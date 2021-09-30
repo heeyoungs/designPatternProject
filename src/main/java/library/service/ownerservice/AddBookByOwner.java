@@ -2,7 +2,7 @@ package library.service.ownerservice;
 
 import exception.InputException;
 import io.wisoft.jdbc.PostgresqlAccess;
-import library.action.Add;
+import library.action.Action;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,12 +10,12 @@ import java.sql.SQLException;
 import java.util.Scanner;
 import java.sql.Date;
 
-public class AddBookByOwner implements Add {
+public class AddBookByOwner implements Action {
 
     private Scanner sc = new Scanner(System.in);
 
     @Override
-    public void addBook() throws InputException {
+    public void actionBook() throws InputException {
         int bookNum, bookPage;
         String bookName, bookWriter;
         Date bookBirth;

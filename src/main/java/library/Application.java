@@ -1,6 +1,7 @@
 package library;
 
 import exception.InputException;
+import library.action.Action;
 import library.gui.Gui;
 import library.login.Login;
 import library.person.Owner;
@@ -25,6 +26,7 @@ public class Application {
         while (run) {
             gui.startGui();
             int who;
+            Action action;
             try {
                 who = scanner.nextInt();
             }catch (Exception e){
@@ -50,20 +52,20 @@ public class Application {
                         }
                         switch (input) {
                             case 1:
-                                AddBookByOwner addBookByOwner = new AddBookByOwner();
-                                addBookByOwner.addBook();
+                                action = new AddBookByOwner();
+                                action.actionBook();
                                 break;
                             case 2:
-                                RemoveBookByOwner removeBookByOwner = new RemoveBookByOwner();
-                                removeBookByOwner.removeBook();
+                                action = new RemoveBookByOwner();
+                                action.actionBook();
                                 break;
                             case 3:
-                                UpdateBookByOwner updateBookByOwner = new UpdateBookByOwner();
-                                updateBookByOwner.updateEMP_OPDATE();
+                                action = new UpdateBookByOwner();
+                                action.actionBook();
                                 break;
                             case 4:
-                                CheckBookList checkBookList = new CheckBookList();
-                                checkBookList.checkBook();
+                                action = new CheckBookList();
+                                action.actionBook();
                                 break;
                             case 0:
                                 gui.input0();
@@ -86,16 +88,16 @@ public class Application {
                         }
                         switch (input) {
                             case 1:
-                                BorrowBookByCustomer borrowBookByCustomer = new BorrowBookByCustomer();
-                                borrowBookByCustomer.updateBook();
+                                action = new BorrowBookByCustomer();
+                                action.actionBook();
                                 break;
                             case 2:
-                                ReturnBookByCustomer returnBookByCustomer = new ReturnBookByCustomer();
-                                returnBookByCustomer.updateBook();
+                                action = new ReturnBookByCustomer();
+                                action.actionBook();
                                 break;
                             case 3:
-                                CheckBookList checkBookList = new CheckBookList();
-                                checkBookList.checkBook();
+                                action = new CheckBookList();
+                                action.actionBook();
                                 break;
                             case 0:
                                 gui.input0();
@@ -115,3 +117,5 @@ public class Application {
         }
     }
 }
+
+// 손님 데이터베이스 테이블을 만들고 그걸로 옵저버 패턴을 만들까..?

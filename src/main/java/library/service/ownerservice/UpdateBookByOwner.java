@@ -2,6 +2,7 @@ package library.service.ownerservice;
 
 import exception.InputException;
 import io.wisoft.jdbc.PostgresqlAccess;
+import library.action.Action;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -9,11 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class UpdateBookByOwner {
+public class UpdateBookByOwner implements Action {
 
     private Scanner sc = new Scanner(System.in);
 
-    public void updateEMP_OPDATE() throws InputException {
+    @Override
+    public void actionBook() throws InputException {
         int bookNum;
         Date bookBirth;
         try {

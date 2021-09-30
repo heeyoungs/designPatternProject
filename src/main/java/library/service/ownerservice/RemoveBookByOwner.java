@@ -2,19 +2,19 @@ package library.service.ownerservice;
 
 import exception.InputException;
 import io.wisoft.jdbc.PostgresqlAccess;
-import library.action.Remove;
+import library.action.Action;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class RemoveBookByOwner implements Remove {
+public class RemoveBookByOwner implements Action {
 
     private Scanner sc = new Scanner(System.in);
 
     @Override
-    public void removeBook() throws InputException {
+    public void actionBook() throws InputException {
         System.out.print("지울 책의 번호를 입력해주세요: ");
         int bookNum;
         try {

@@ -2,8 +2,7 @@ package library.service.customerservice;
 
 import exception.InputException;
 import io.wisoft.jdbc.PostgresqlAccess;
-import library.action.Update;
-import library.service.CheckBookList;
+import library.action.Action;
 import library.service.IsBook;
 
 import java.sql.Connection;
@@ -11,12 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class BorrowBookByCustomer implements Update {
+public class BorrowBookByCustomer implements Action {
 
     private Scanner sc = new Scanner(System.in);
 
     @Override
-    public void updateBook() throws InputException {
+    public void actionBook() throws InputException {
         System.out.print("빌리고 싶은 책의 번호를 입력해주세요: ");
         int bookNum;
         try {
