@@ -1,18 +1,21 @@
 package library.login;
 
-import library.person.Owner;
+import library.service.SelectService;
 
 import java.util.Scanner;
 
-public class Login {
+public class OwnerLogin {
+
     private Scanner scanner = new Scanner(System.in);
 
-    public void loginOwner(Owner owner) {
+    public void ownerLogin() {
         int passwordCount = 0;
+        SelectService selectService = new SelectService();
+
         System.out.println("비밀번호를 입력해주세요, 3회 틀리면 종료됩니다.");
         while (true) {
             String inputPassword = scanner.next();
-            if (inputPassword.equals(owner.getPassword())) {
+            if (inputPassword.equals(selectService.getOwnerPassword())) {
                 System.out.println("\t\t[관리자]");
                 return;
             } else {
