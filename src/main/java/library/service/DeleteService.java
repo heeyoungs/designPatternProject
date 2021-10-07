@@ -1,19 +1,18 @@
 package library.service;
 
 import database.PostgresqlAccess;
-import exception.InputException;
+import exception.NumException;
 import library.ui.EtcUi;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 public class DeleteService {
+    EtcUi etcUi = new EtcUi();
 
-    public void removeBook() throws InputException {
+    public void removeBook() throws NumException {
         SelectService selectService = new SelectService();
-        EtcUi etcUi = new EtcUi();
 
         System.out.print("지울 책의 번호를 입력해주세요: ");
         int bookNum = etcUi.inputNum();
@@ -35,7 +34,7 @@ public class DeleteService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    } // 책 제거하기
 
     public void returnBook(int bookNum) {
         String query = "DELETE FROM 대여 WHERE 책번호=?";

@@ -1,13 +1,13 @@
 package library.ui;
 
-import exception.InputException;
+import exception.NumException;
 import library.login.CustomerLogin;
 import library.service.SelectService;
 import library.service.UpdateService;
 
-public class CustomerUi {
+public class CustomerUi implements UiRun{
 
-    public void customerUi() {
+    private void customerUi() {
         System.out.println("-------------------------");
         System.out.println("어떤 기능을 이용하실 건가요.");
         System.out.println("1.책 빌려가기");
@@ -18,7 +18,7 @@ public class CustomerUi {
         System.out.print("입력 : ");
     }
 
-    public void run() throws InputException {
+    public void run() throws NumException {
 
         CustomerLogin customerLogin = new CustomerLogin();
         String phoneNum = customerLogin.customerLogin();

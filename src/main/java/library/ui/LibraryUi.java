@@ -1,16 +1,13 @@
 package library.ui;
 
-import exception.InputException;
+import exception.DateException;
+import exception.NumException;
 
-import java.util.Scanner;
+public class LibraryUi implements UiRun {
 
-public class LibraryUi {
+    public void run() throws NumException, DateException {
 
-    public void run() throws InputException {
-
-        CustomerUi customerUi = new CustomerUi();
-        OwnerUi ownerUi = new OwnerUi();
-        JoinUi joinUi = new JoinUi();
+        UiRun uiRun;
         EtcUi etcUi = new EtcUi();
 
         while (true) {
@@ -22,9 +19,18 @@ public class LibraryUi {
                     etcUi.exitUi();
                     return;
                 }
-                case 1 -> ownerUi.run();
-                case 2 -> customerUi.run();
-                case 3 -> joinUi.run();
+                case 1 -> {
+                    uiRun = new OwnerUi();
+                    uiRun.run();
+                }
+                case 2 -> {
+                    uiRun = new CustomerUi();
+                    uiRun.run();
+                }
+                case 3 -> {
+                    uiRun = new JoinUi();
+                    uiRun.run();
+                }
                 default -> etcUi.exceptionUi();
             }
         }

@@ -1,11 +1,11 @@
 package library.ui;
 
-import exception.InputException;
+import exception.NumException;
 import library.service.InsertService;
 
-public class JoinUi {
+public class JoinUi implements UiRun{
 
-    public void run() throws InputException {
+    public void run() throws NumException {
         System.out.print("회원등록을 하시겠습니까? 등록은 1번 다른 숫자를 눌러주세요: ");
 
         EtcUi etcUi = new EtcUi();
@@ -18,7 +18,7 @@ public class JoinUi {
         }
     }
 
-    void writeUserInfo(){
+    private void writeUserInfo(){
         InsertService insertService = new InsertService();
         EtcUi etcUi = new EtcUi();
 

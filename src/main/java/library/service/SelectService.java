@@ -1,6 +1,7 @@
 package library.service;
 
 import database.PostgresqlAccess;
+import library.ui.EtcUi;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SelectService {
+    EtcUi etcUi = new EtcUi();
+
     public void showUserList() {
         System.out.println("사용자 목록을 보여줍니다.");
         final String query = "SELECT * FROM 손님";

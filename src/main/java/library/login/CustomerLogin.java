@@ -12,7 +12,7 @@ public class CustomerLogin {
         return checkUserNumber(phoneNum);
     }
 
-    String checkUserNumber(String phoneNum){
+    private String checkUserNumber(String phoneNum){
         SelectService selectService = new SelectService();
 
         if (selectService.isCustomerExist(phoneNum)){

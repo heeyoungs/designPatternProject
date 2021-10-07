@@ -10,11 +10,11 @@ public class OwnerLogin {
         checkOwnerPassword();
     }
 
-    void checkOwnerPassword(){
+    private void checkOwnerPassword() {
         SelectService selectService = new SelectService();
         EtcUi etcUi = new EtcUi();
 
-        for(int passwordCount = 1;passwordCount <= 3; passwordCount++) {
+        for (int passwordCount = 1; passwordCount <= 3; passwordCount++) {
             String inputPassword = etcUi.inputString();
             if (inputPassword.equals(selectService.getOwnerPassword())) {
                 System.out.println("\t\t[관리자]");

@@ -1,7 +1,8 @@
 package library.service;
 
 import database.PostgresqlAccess;
-import exception.InputException;
+import exception.DateException;
+import exception.NumException;
 import library.ui.EtcUi;
 
 import java.sql.Connection;
@@ -10,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class InsertService {
+    EtcUi etcUi = new EtcUi();
 
     public void joinUser(String phoneNumber, String userName) {
         final String query = "INSERT INTO 손님 VALUES (?,?)";
@@ -28,8 +30,7 @@ public class InsertService {
         System.out.println("등록이 완료되었습니다.");
     } // 회원 등록하기
 
-    public void addBook() throws InputException {
-        EtcUi etcUi = new EtcUi();
+    public void addBook() throws NumException, DateException {
         System.out.println("추가할 책의 정보를 입력해주세요.");
 
         System.out.print("책 번호: ");
@@ -61,7 +62,7 @@ public class InsertService {
             e.printStackTrace();
         }
         System.out.println(bookNum + "번 책이 추가되었습니다.");
-    }
+    } // 책 추가하기
 
     public void addBorrowInfo(int bookNum, String phoneNum) {
         final String query = "INSERT INTO 대여 VALUES (?,?)";
