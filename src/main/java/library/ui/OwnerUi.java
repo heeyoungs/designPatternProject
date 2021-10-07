@@ -7,7 +7,6 @@ import library.service.InsertService;
 import library.service.SelectService;
 import library.service.UpdateService;
 
-import java.util.Scanner;
 
 public class OwnerUi {
 
@@ -19,14 +18,12 @@ public class OwnerUi {
         System.out.println("3.책 정보 갱신하기");
         System.out.println("4.책 목록 확인하기");
         System.out.println("5.사용자 조회하기");
+        System.out.println("6.사용자 대출 현황 조회하기");
         System.out.println("0.관리자 모드 종료하기");
         System.out.print("입력 : ");
     }
 
     public void run() throws InputException {
-
-        Scanner scanner = new Scanner(System.in);
-
         OwnerLogin login = new OwnerLogin();
         EtcUi etcUi = new EtcUi();
 
@@ -37,37 +34,22 @@ public class OwnerUi {
         SelectService selectService = new SelectService();
         UpdateService updateService = new UpdateService();
 
-        int input;
-
         while (true) {
             ownerUi();
-            try {
-                input = scanner.nextInt();
-            } catch (Exception e) {
-                throw new InputException("숫자를 입력안함.");
-            }
+            int input = etcUi.inputNum();
+
             switch (input) {
-                case 1:
-                    insertService.addBook();
-                    break;
-                case 2:
-                    deleteService.removeBook();
-                    break;
-                case 3:
-                    updateService.updateBookBirth();
-                    break;
-                case 4:
-                    selectService.showBookList();
-                    break;
-                case 5:
-                    selectService.showUserList();
-                    break;
-                case 0:
+                case 1 -> insertService.addBook();
+                case 2 -> deleteService.removeBook();
+                case 3 -> updateService.updateBookBirth();
+                case 4 -> selectService.showBookList();
+                case 5 -> selectService.showUserList();
+                case 6 -> selectService.showUserBorrowInfo();
+                case 0 -> {
                     etcUi.exitUi();
                     return;
-                default:
-                    etcUi.exceptionUi();
-                    break;
+                }
+                default -> etcUi.exceptionUi();
             }
         }
     }
