@@ -2,8 +2,12 @@ package library.ui;
 
 import exception.DateException;
 import exception.NumException;
+import library.ui.mode.CustomerUi;
+import library.ui.mode.JoinUi;
+import library.ui.mode.OwnerUi;
+import library.ui.mode.UiRun;
 
-public class LibraryUi implements UiRun {
+public class LibraryUi {
 
     EtcUi etcUi = new EtcUi();
 
@@ -35,10 +39,6 @@ public class LibraryUi implements UiRun {
         UiRun uiRun;
 
         switch (library) {
-            case EXIT -> {
-                etcUi.exitUi();
-                return;
-            }
             case OWNER -> {
                 uiRun = new OwnerUi();
                 uiRun.run();
@@ -51,6 +51,7 @@ public class LibraryUi implements UiRun {
                 uiRun = new JoinUi();
                 uiRun.run();
             }
+            case EXIT -> etcUi.exitUi();
             case DEFAULT -> etcUi.exceptionUi();
         }
     }

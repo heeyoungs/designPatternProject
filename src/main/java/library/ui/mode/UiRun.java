@@ -1,4 +1,4 @@
-package library.ui;
+package library.ui.mode;
 
 import exception.DateException;
 import exception.NumException;

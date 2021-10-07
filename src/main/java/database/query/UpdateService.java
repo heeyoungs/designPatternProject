@@ -1,6 +1,6 @@
-package library.service;
+package database.query;
 
-import database.PostgresqlAccess;
+import database.access.PostgresqlAccess;
 import exception.DateException;
 import exception.NumException;
 import library.ui.EtcUi;

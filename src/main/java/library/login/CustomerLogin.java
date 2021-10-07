@@ -1,6 +1,6 @@
 package library.login;
 
-import library.service.SelectService;
+import database.query.SelectService;
 import library.ui.EtcUi;
 
 public class CustomerLogin {

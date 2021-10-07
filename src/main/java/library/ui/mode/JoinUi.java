@@ -1,9 +1,10 @@
-package library.ui;
+package library.ui.mode;
 
 import exception.NumException;
-import library.service.InsertService;
+import database.query.InsertService;
+import library.ui.EtcUi;
 
-public class JoinUi implements UiRun{
+public class JoinUi implements UiRun {
 
     public void run() throws NumException {
         System.out.print("회원등록을 하시겠습니까? 등록은 1번 다른 숫자를 눌러주세요: ");
