@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class InsertService {
+
     EtcUi etcUi = new EtcUi();
 
     public void joinUser(String phoneNumber, String userName) {

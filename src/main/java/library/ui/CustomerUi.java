@@ -5,7 +5,11 @@ import library.login.CustomerLogin;
 import library.service.SelectService;
 import library.service.UpdateService;
 
-public class CustomerUi implements UiRun{
+public class CustomerUi implements UiRun {
+
+    EtcUi etcUi = new EtcUi();
+
+    private enum CustomerSkill {BORROW, RETURN, CHECK_ALL, CHECK_BORROW, EXIT, DEFAULT}
 
     private void customerUi() {
         System.out.println("-------------------------");
@@ -22,29 +26,43 @@ public class CustomerUi implements UiRun{
 
         CustomerLogin customerLogin = new CustomerLogin();
         String phoneNum = customerLogin.customerLogin();
-        if (phoneNum.equals("-1")){
+
+        if (phoneNum.equals("-1")) {
             return;
         }
-
-        EtcUi etcUi = new EtcUi();
-        UpdateService updateService = new UpdateService();
-        SelectService selectService = new SelectService();
 
         while (true) {
             customerUi();
             int num = etcUi.inputNum();
 
-            switch (num) {
-                case 1 -> updateService.borrowBook(phoneNum);
-                case 2 -> updateService.returnBook(phoneNum);
-                case 3 -> selectService.showBookList();
-                case 4 -> selectService.showBorrowBookList(phoneNum);
-                case 0 -> {
-                    etcUi.exitUi();
-                    return;
-                }
-                default -> etcUi.exceptionUi();
+            if (num == 1) {
+                customerSwitch(CustomerSkill.BORROW, phoneNum);
+            } else if (num == 2) {
+                customerSwitch(CustomerSkill.RETURN, phoneNum);
+            } else if (num == 3) {
+                customerSwitch(CustomerSkill.CHECK_ALL, phoneNum);
+            } else if (num == 4) {
+                customerSwitch(CustomerSkill.CHECK_BORROW, phoneNum);
+            } else if (num == 0) {
+                customerSwitch(CustomerSkill.EXIT, phoneNum);
+                return;
+            } else {
+                customerSwitch(CustomerSkill.DEFAULT, phoneNum);
             }
+        }
+    }
+
+    private void customerSwitch(CustomerSkill customerSkill, String phoneNum) throws NumException {
+        UpdateService updateService = new UpdateService();
+        SelectService selectService = new SelectService();
+
+        switch (customerSkill) {
+            case BORROW -> updateService.borrowBook(phoneNum);
+            case RETURN -> updateService.returnBook(phoneNum);
+            case CHECK_ALL -> selectService.showBookList();
+            case CHECK_BORROW -> selectService.showBorrowBookList(phoneNum);
+            case EXIT -> etcUi.exitUi();
+            case DEFAULT -> etcUi.exceptionUi();
         }
     }
 }

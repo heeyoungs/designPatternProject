@@ -11,6 +11,10 @@ import library.service.UpdateService;
 
 public class OwnerUi implements UiRun {
 
+    EtcUi etcUi = new EtcUi();
+
+    private enum OwnerSkill {ADD, REMOVE, UPDATE, CHECK_ALL, CHECK_USER, CHECK_BORROW, EXIT, DEFAULT}
+
     private void ownerUi() {
         System.out.println("-------------------------");
         System.out.println("어떤 기능을 이용하실 건가요.");
@@ -25,33 +29,50 @@ public class OwnerUi implements UiRun {
     }
 
     public void run() throws NumException, DateException {
-        OwnerLogin login = new OwnerLogin();
-        EtcUi etcUi = new EtcUi();
 
+        OwnerLogin login = new OwnerLogin();
         login.ownerLogin();
+
+        while (true) {
+            ownerUi();
+            int input = etcUi.inputNum();
+            if (input == 1) {
+                ownerSwitch(OwnerSkill.ADD);
+            } else if (input == 2) {
+                ownerSwitch(OwnerSkill.REMOVE);
+            } else if (input == 3) {
+                ownerSwitch(OwnerSkill.UPDATE);
+            } else if (input == 4) {
+                ownerSwitch(OwnerSkill.CHECK_ALL);
+            } else if (input == 5) {
+                ownerSwitch(OwnerSkill.CHECK_USER);
+            } else if (input == 6) {
+                ownerSwitch(OwnerSkill.CHECK_BORROW);
+            } else if (input == 0) {
+                ownerSwitch(OwnerSkill.EXIT);
+                return;
+            } else {
+                ownerSwitch(OwnerSkill.DEFAULT);
+            }
+        }
+    }
+
+    private void ownerSwitch(OwnerSkill ownerSkill) throws NumException, DateException {
 
         DeleteService deleteService = new DeleteService();
         InsertService insertService = new InsertService();
         SelectService selectService = new SelectService();
         UpdateService updateService = new UpdateService();
 
-        while (true) {
-            ownerUi();
-            int input = etcUi.inputNum();
-
-            switch (input) {
-                case 1 -> insertService.addBook();
-                case 2 -> deleteService.removeBook();
-                case 3 -> updateService.updateBookBirth();
-                case 4 -> selectService.showBookList();
-                case 5 -> selectService.showUserList();
-                case 6 -> selectService.showUserBorrowInfo();
-                case 0 -> {
-                    etcUi.exitUi();
-                    return;
-                }
-                default -> etcUi.exceptionUi();
-            }
+        switch (ownerSkill) {
+            case ADD -> insertService.addBook();
+            case REMOVE -> deleteService.removeBook();
+            case UPDATE -> updateService.updateBookBirth();
+            case CHECK_ALL -> selectService.showBookList();
+            case CHECK_USER -> selectService.showUserList();
+            case CHECK_BORROW -> selectService.showUserBorrowInfo();
+            case EXIT -> etcUi.exitUi();
+            case DEFAULT -> etcUi.exceptionUi();
         }
     }
 }

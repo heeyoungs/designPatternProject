@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DeleteService {
+
     EtcUi etcUi = new EtcUi();
 
     public void removeBook() throws NumException {

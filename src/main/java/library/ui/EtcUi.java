@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.util.Scanner;
 
 public class EtcUi {
+
     private final Scanner scanner = new Scanner(System.in);
 
     public void startUi() {

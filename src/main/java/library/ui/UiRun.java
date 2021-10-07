@@ -4,5 +4,6 @@ import exception.DateException;
 import exception.NumException;
 
 public interface UiRun{
-    public void run() throws NumException, DateException;
+
+    void run() throws NumException, DateException;
 }

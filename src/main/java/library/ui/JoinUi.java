@@ -7,15 +7,7 @@ public class JoinUi implements UiRun{
 
     public void run() throws NumException {
         System.out.print("회원등록을 하시겠습니까? 등록은 1번 다른 숫자를 눌러주세요: ");
-
-        EtcUi etcUi = new EtcUi();
-        int num = etcUi.inputNum();
-
-        if (num == 1) {
-            writeUserInfo();
-        } else {
-            etcUi.logOutUi();
-        }
+        isJoin();
     }
 
     private void writeUserInfo(){
@@ -27,5 +19,15 @@ public class JoinUi implements UiRun{
         System.out.print("사용자 이름을 입력해주세요: ");
         String userName = etcUi.inputString();
         insertService.joinUser(phoneNum, userName);
+    }
+
+    private void isJoin() throws NumException {
+        EtcUi etcUi = new EtcUi();
+        int num = etcUi.inputNum();
+        if (num == 1) {
+            writeUserInfo();
+        } else {
+            etcUi.logOutUi();
+        }
     }
 }
