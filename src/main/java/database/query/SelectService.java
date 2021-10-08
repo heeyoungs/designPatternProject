@@ -1,7 +1,6 @@
 package database.query;
 
 import database.access.PostgresqlAccess;
-import library.ui.EtcUi;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,8 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SelectService {
-
-    EtcUi etcUi = new EtcUi();
 
     public void showUserList() {
         System.out.println("사용자 목록을 보여줍니다.");
@@ -22,9 +19,8 @@ public class SelectService {
                 System.out.print("[이름] " + rs.getString(2) + "||");
                 System.out.println("[전화번호] " + rs.getString(1));
             }
-        } catch (SQLException sqex) {
-            System.out.println("SQLException: " + sqex.getMessage());
-            System.out.println("SQLState: " + sqex.getSQLState());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     } // 손님 목록 출력
 
@@ -42,9 +38,8 @@ public class SelectService {
                 System.out.print("[책 출판년도]" + rs.getString(5) + "||");
                 System.out.println("[책 대출 가능여부]" + rs.getString(6));
             }
-        } catch (SQLException sqex) {
-            System.out.println("SQLException: " + sqex.getMessage());
-            System.out.println("SQLState: " + sqex.getSQLState());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     } // 도서 목록 출력
 
@@ -60,8 +55,8 @@ public class SelectService {
                 System.out.print("[책 번호] " + rs.getInt(1) + "||");
                 System.out.println("[책 이름] " + rs.getString(2));
             }
-        } catch (SQLException sqex) {
-            sqex.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     } // 대여 목록 출력
 
@@ -70,12 +65,12 @@ public class SelectService {
         try (Connection connection = PostgresqlAccess.setConnection();
              PreparedStatement pstmt = connection.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery();
-        ){
-            while(rs.next()){
+        ) {
+            while (rs.next()) {
                 System.out.print("[이름]" + rs.getString(1) + "||");
                 System.out.println("[책이름]" + rs.getString(2));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     } // 대출 정보 확인
@@ -88,7 +83,8 @@ public class SelectService {
             ResultSet rs = pstmt.executeQuery();
             rs.next();
             return rs.getString(1);
-        } catch (SQLException sqex) {
+        } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
     } // 주인 로그인
@@ -102,7 +98,8 @@ public class SelectService {
             ResultSet rs = pstmt.executeQuery();
             rs.next();
             return rs.getString(1);
-        } catch (SQLException sqex) {
+        } catch (SQLException e) {
+            e.printStackTrace();
             return "-1";
         }
     } // 손님의 이름 가져오기
@@ -119,7 +116,8 @@ public class SelectService {
             if (rs.getBoolean(1)) {
                 return true;
             }
-        } catch (SQLException sqex) {
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
         return false;
@@ -138,7 +136,8 @@ public class SelectService {
             if (rs.getBoolean(1)) {
                 return true;
             }
-        } catch (SQLException sqex) {
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
         return false;
@@ -155,7 +154,8 @@ public class SelectService {
             if (rs.getBoolean(1)) {
                 return true;
             }
-        } catch (SQLException sqex) {
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
         return false;

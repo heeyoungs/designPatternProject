@@ -1,14 +1,16 @@
 package library.login;
 
+import library.input.Input;
 import database.query.SelectService;
-import library.ui.EtcUi;
 
 public class CustomerLogin {
 
+    Input input = Input.getInput();
+
     public String customerLogin(){
-        EtcUi etcUi = new EtcUi();
+
         System.out.println("등록할 때 사용한 전화번호를 입력해주세요: ");
-        String phoneNum = etcUi.inputString();
+        String phoneNum = input.inputString();
         return checkUserNumber(phoneNum);
     }
 

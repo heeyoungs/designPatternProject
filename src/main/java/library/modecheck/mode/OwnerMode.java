@@ -1,5 +1,6 @@
-package library.ui.mode;
+package library.modecheck.mode;
 
+import library.input.Input;
 import exception.DateException;
 import exception.NumException;
 import library.login.OwnerLogin;
@@ -7,14 +8,15 @@ import database.query.DeleteService;
 import database.query.InsertService;
 import database.query.SelectService;
 import database.query.UpdateService;
-import library.ui.EtcUi;
+import library.modecheck.EtcUi;
 
 
-public class OwnerUi implements UiRun {
+public class OwnerMode implements Mode {
 
-    EtcUi etcUi = new EtcUi();
+    EtcUi etcUi = EtcUi.getEtcUi();
+    Input input = Input.getInput();
 
-    private enum OwnerSkill {ADD, REMOVE, UPDATE, CHECK_ALL, CHECK_USER, CHECK_BORROW, EXIT, DEFAULT}
+    private enum OwnerSkill {ADD, REMOVE, UPDATE, CHECK_ALL, CHECK_USER, CHECK_BORROW, DEFAULT}
 
     private void ownerUi() {
         System.out.println("-------------------------");
@@ -32,30 +34,34 @@ public class OwnerUi implements UiRun {
     public void run() throws NumException, DateException {
 
         OwnerLogin login = new OwnerLogin();
+
         login.ownerLogin();
 
-        while (true) {
+        do {
             ownerUi();
-            int input = etcUi.inputNum();
-            if (input == 1) {
-                ownerSwitch(OwnerSkill.ADD);
-            } else if (input == 2) {
-                ownerSwitch(OwnerSkill.REMOVE);
-            } else if (input == 3) {
-                ownerSwitch(OwnerSkill.UPDATE);
-            } else if (input == 4) {
-                ownerSwitch(OwnerSkill.CHECK_ALL);
-            } else if (input == 5) {
-                ownerSwitch(OwnerSkill.CHECK_USER);
-            } else if (input == 6) {
-                ownerSwitch(OwnerSkill.CHECK_BORROW);
-            } else if (input == 0) {
-                ownerSwitch(OwnerSkill.EXIT);
+            int command = input.inputNum();
+            OwnerSkill ownerSkill;
+
+            if (command == 1) {
+                ownerSkill = OwnerSkill.ADD;
+            } else if (command == 2) {
+                ownerSkill = OwnerSkill.REMOVE;
+            } else if (command == 3) {
+                ownerSkill = OwnerSkill.UPDATE;
+            } else if (command == 4) {
+                ownerSkill = OwnerSkill.CHECK_ALL;
+            } else if (command == 5) {
+                ownerSkill = OwnerSkill.CHECK_USER;
+            } else if (command == 6) {
+                ownerSkill = OwnerSkill.CHECK_BORROW;
+            } else if (command == 0) {
+                etcUi.logOutUi();
                 return;
             } else {
-                ownerSwitch(OwnerSkill.DEFAULT);
+                ownerSkill = OwnerSkill.DEFAULT;
             }
-        }
+            ownerSwitch(ownerSkill);
+        }while(true);
     }
 
     private void ownerSwitch(OwnerSkill ownerSkill) throws NumException, DateException {
@@ -72,8 +78,7 @@ public class OwnerUi implements UiRun {
             case CHECK_ALL -> selectService.showBookList();
             case CHECK_USER -> selectService.showUserList();
             case CHECK_BORROW -> selectService.showUserBorrowInfo();
-            case EXIT -> etcUi.exitUi();
-            case DEFAULT -> etcUi.exceptionUi();
+            case DEFAULT -> etcUi.defaultUi();
         }
     }
 }

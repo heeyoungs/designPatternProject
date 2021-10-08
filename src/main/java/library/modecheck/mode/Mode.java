@@ -1,9 +1,9 @@
-package library.ui.mode;
+package library.modecheck.mode;
 
 import exception.DateException;
 import exception.NumException;
 
-public interface UiRun{
+public interface Mode {
 
     void run() throws NumException, DateException;
 }

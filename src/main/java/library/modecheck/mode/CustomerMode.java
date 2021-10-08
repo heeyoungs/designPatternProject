@@ -1,16 +1,19 @@
-package library.ui.mode;
+package library.modecheck.mode;
 
+import database.query.DeleteService;
+import library.input.Input;
 import exception.NumException;
 import library.login.CustomerLogin;
 import database.query.SelectService;
 import database.query.UpdateService;
-import library.ui.EtcUi;
+import library.modecheck.EtcUi;
 
-public class CustomerUi implements UiRun {
+public class CustomerMode implements Mode {
 
-    EtcUi etcUi = new EtcUi();
+    EtcUi etcUi = EtcUi.getEtcUi();
+    Input input = Input.getInput();
 
-    private enum CustomerSkill {BORROW, RETURN, CHECK_ALL, CHECK_BORROW, EXIT, DEFAULT}
+    private enum CustomerSkill {BORROW, RETURN, CHECK_ALL, CHECK_BORROW, RESIGN, DEFAULT}
 
     private void customerUi() {
         System.out.println("-------------------------");
@@ -19,6 +22,7 @@ public class CustomerUi implements UiRun {
         System.out.println("2.책 반납하기");
         System.out.println("3.책 목록 확인하기");
         System.out.println("4.대여목록 확인하기");
+        System.out.println("5.탈퇴하기");
         System.out.println("0.손님 모드 종료하기");
         System.out.print("입력 : ");
     }
@@ -32,38 +36,43 @@ public class CustomerUi implements UiRun {
             return;
         }
 
-        while (true) {
+        do {
             customerUi();
-            int num = etcUi.inputNum();
+            int num = input.inputNum();
+            CustomerSkill customerSkill;
 
             if (num == 1) {
-                customerSwitch(CustomerSkill.BORROW, phoneNum);
+                customerSkill = CustomerSkill.BORROW;
             } else if (num == 2) {
-                customerSwitch(CustomerSkill.RETURN, phoneNum);
+                customerSkill = CustomerSkill.RETURN;
             } else if (num == 3) {
-                customerSwitch(CustomerSkill.CHECK_ALL, phoneNum);
+                customerSkill = CustomerSkill.CHECK_ALL;
             } else if (num == 4) {
-                customerSwitch(CustomerSkill.CHECK_BORROW, phoneNum);
+                customerSkill = CustomerSkill.CHECK_BORROW;
+            } else if (num == 5) {
+                customerSkill = CustomerSkill.RESIGN;
             } else if (num == 0) {
-                customerSwitch(CustomerSkill.EXIT, phoneNum);
+                etcUi.logOutUi();
                 return;
             } else {
-                customerSwitch(CustomerSkill.DEFAULT, phoneNum);
+                customerSkill = CustomerSkill.DEFAULT;
             }
-        }
+            customerSwitch(customerSkill, phoneNum);
+        } while (true);
     }
 
     private void customerSwitch(CustomerSkill customerSkill, String phoneNum) throws NumException {
         UpdateService updateService = new UpdateService();
         SelectService selectService = new SelectService();
+        DeleteService deleteService = new DeleteService();
 
         switch (customerSkill) {
             case BORROW -> updateService.borrowBook(phoneNum);
             case RETURN -> updateService.returnBook(phoneNum);
             case CHECK_ALL -> selectService.showBookList();
             case CHECK_BORROW -> selectService.showBorrowBookList(phoneNum);
-            case EXIT -> etcUi.exitUi();
-            case DEFAULT -> etcUi.exceptionUi();
+            case RESIGN -> deleteService.resignUser(phoneNum);
+            case DEFAULT -> etcUi.defaultUi();
         }
     }
 }

@@ -1,9 +1,11 @@
 package library.login;
 
+import library.input.Input;
 import database.query.SelectService;
-import library.ui.EtcUi;
 
 public class OwnerLogin {
+
+    Input input = Input.getInput();
 
     public void ownerLogin() {
         System.out.println("비밀번호를 입력해주세요, 3회 틀리면 종료됩니다.");
@@ -12,10 +14,9 @@ public class OwnerLogin {
 
     private void checkOwnerPassword() {
         SelectService selectService = new SelectService();
-        EtcUi etcUi = new EtcUi();
 
         for (int passwordCount = 1; passwordCount <= 3; passwordCount++) {
-            String inputPassword = etcUi.inputString();
+            String inputPassword = input.inputString();
             if (inputPassword.equals(selectService.getOwnerPassword())) {
                 System.out.println("\t\t[관리자]");
                 return;

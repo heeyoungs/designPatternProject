@@ -1,9 +1,9 @@
 package database.query;
 
 import database.access.PostgresqlAccess;
+import library.input.Input;
 import exception.DateException;
 import exception.NumException;
-import library.ui.EtcUi;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 public class InsertService {
 
-    EtcUi etcUi = new EtcUi();
+    Input input = Input.getInput();
 
     public void joinUser(String phoneNumber, String userName) {
         final String query = "INSERT INTO 손님 VALUES (?,?)";
@@ -35,15 +35,15 @@ public class InsertService {
         System.out.println("추가할 책의 정보를 입력해주세요.");
 
         System.out.print("책 번호: ");
-        int bookNum = etcUi.inputNum();
+        int bookNum = input.inputNum();
         System.out.print("책 이름: ");
-        String bookName = etcUi.inputString();
+        String bookName = input.inputString();
         System.out.print("책 작가: ");
-        String bookWriter = etcUi.inputString();
+        String bookWriter = input.inputString();
         System.out.print("책 페이지: ");
-        int bookPage = etcUi.inputNum();
+        int bookPage = input.inputNum();
         System.out.print("책 출판년도: ");
-        Date bookBirth = etcUi.inputDate();
+        Date bookBirth = input.inputDate();
 
         final String query = "INSERT INTO 도서목록 VALUES (?,?,?,?,?,?)";
         try (Connection connection = PostgresqlAccess.setConnection();
@@ -60,23 +60,8 @@ public class InsertService {
             connection.commit();
         } catch (SQLException e) {
             System.out.println(bookNum + "번의 책은 이미 있습니다.");
-            e.printStackTrace();
+            return;
         }
         System.out.println(bookNum + "번 책이 추가되었습니다.");
     } // 책 추가하기
-
-    public void addBorrowInfo(int bookNum, String phoneNum) {
-        final String query = "INSERT INTO 대여 VALUES (?,?)";
-        try (Connection connection = PostgresqlAccess.setConnection();
-             PreparedStatement pstmt = connection.prepareStatement(query)) {
-            connection.setAutoCommit(false);
-
-            pstmt.setInt(1, bookNum);
-            pstmt.setString(2, phoneNum);
-            pstmt.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    } // 대여 테이블에 정보 추가
 }
