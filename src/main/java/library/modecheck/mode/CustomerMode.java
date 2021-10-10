@@ -15,6 +15,24 @@ public class CustomerMode implements Mode {
 
     private enum CustomerSkill {BORROW, RETURN, CHECK_ALL, CHECK_BORROW, RESIGN, DEFAULT}
 
+    private CustomerSkill enumValue(int input) {
+        CustomerSkill customerSkill;
+        if (input == 1) {
+            customerSkill = CustomerSkill.BORROW;
+        } else if (input == 2) {
+            customerSkill = CustomerSkill.RETURN;
+        } else if (input == 3) {
+            customerSkill = CustomerSkill.CHECK_ALL;
+        } else if (input == 4) {
+            customerSkill = CustomerSkill.CHECK_BORROW;
+        } else if (input == 5) {
+            customerSkill = CustomerSkill.RESIGN;
+        } else {
+            customerSkill = CustomerSkill.DEFAULT;
+        }
+        return customerSkill;
+    }
+
     private void customerUi() {
         System.out.println("-------------------------");
         System.out.println("어떤 기능을 이용하실 건가요.");
@@ -39,24 +57,11 @@ public class CustomerMode implements Mode {
         do {
             customerUi();
             int num = input.inputNum();
-            CustomerSkill customerSkill;
-
-            if (num == 1) {
-                customerSkill = CustomerSkill.BORROW;
-            } else if (num == 2) {
-                customerSkill = CustomerSkill.RETURN;
-            } else if (num == 3) {
-                customerSkill = CustomerSkill.CHECK_ALL;
-            } else if (num == 4) {
-                customerSkill = CustomerSkill.CHECK_BORROW;
-            } else if (num == 5) {
-                customerSkill = CustomerSkill.RESIGN;
-            } else if (num == 0) {
+            if (num == 0) {
                 etcUi.logOutUi();
                 return;
-            } else {
-                customerSkill = CustomerSkill.DEFAULT;
             }
+            CustomerSkill customerSkill = enumValue(num);
             customerSwitch(customerSkill, phoneNum);
         } while (true);
     }

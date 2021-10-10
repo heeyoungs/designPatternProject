@@ -18,6 +18,26 @@ public class OwnerMode implements Mode {
 
     private enum OwnerSkill {ADD, REMOVE, UPDATE, CHECK_ALL, CHECK_USER, CHECK_BORROW, DEFAULT}
 
+    private OwnerSkill enumValue(int input) {
+        OwnerSkill ownerSkill;
+        if (input == 1) {
+            ownerSkill = OwnerSkill.ADD;
+        } else if (input == 2) {
+            ownerSkill = OwnerSkill.REMOVE;
+        } else if (input == 3) {
+            ownerSkill = OwnerSkill.UPDATE;
+        } else if (input == 4) {
+            ownerSkill = OwnerSkill.CHECK_ALL;
+        } else if (input == 5) {
+            ownerSkill = OwnerSkill.CHECK_USER;
+        } else if (input == 6) {
+            ownerSkill = OwnerSkill.CHECK_BORROW;
+        } else {
+            ownerSkill = OwnerSkill.DEFAULT;
+        }
+        return ownerSkill;
+    }
+
     private void ownerUi() {
         System.out.println("-------------------------");
         System.out.println("어떤 기능을 이용하실 건가요.");
@@ -40,28 +60,13 @@ public class OwnerMode implements Mode {
         do {
             ownerUi();
             int command = input.inputNum();
-            OwnerSkill ownerSkill;
-
-            if (command == 1) {
-                ownerSkill = OwnerSkill.ADD;
-            } else if (command == 2) {
-                ownerSkill = OwnerSkill.REMOVE;
-            } else if (command == 3) {
-                ownerSkill = OwnerSkill.UPDATE;
-            } else if (command == 4) {
-                ownerSkill = OwnerSkill.CHECK_ALL;
-            } else if (command == 5) {
-                ownerSkill = OwnerSkill.CHECK_USER;
-            } else if (command == 6) {
-                ownerSkill = OwnerSkill.CHECK_BORROW;
-            } else if (command == 0) {
+            if (command == 0) {
                 etcUi.logOutUi();
                 return;
-            } else {
-                ownerSkill = OwnerSkill.DEFAULT;
             }
+            OwnerSkill ownerSkill = enumValue(command);
             ownerSwitch(ownerSkill);
-        }while(true);
+        } while (true);
     }
 
     private void ownerSwitch(OwnerSkill ownerSkill) throws NumException, DateException {

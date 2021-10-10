@@ -15,25 +15,30 @@ public class CommandMode {
 
     private enum Command {OWNER, CUSTOMER, JOIN, DEFAULT}
 
+    private Command enumValue(int input) {
+        Command command;
+        if (input == 1) {
+            command = Command.OWNER;
+        } else if (input == 2) {
+            command = Command.CUSTOMER;
+        } else if (input == 3) {
+            command = Command.JOIN;
+        } else {
+            command = Command.DEFAULT;
+        }
+        return command;
+    }
+
     public void run() throws NumException, DateException {
 
         do {
             etcUi.startUi();
             int who = input.inputNum();
-            Command command;
-
             if (who == 0) {
                 etcUi.exitUi();
                 return;
-            } else if (who == 1) {
-                command = Command.OWNER;
-            } else if (who == 2) {
-                command = Command.CUSTOMER;
-            } else if (who == 3) {
-                command = Command.JOIN;
-            } else {
-                command = Command.DEFAULT;
             }
+            Command command = enumValue(who);
             librarySwitch(command);
         } while (true);
     }
